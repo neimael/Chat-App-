@@ -1,66 +1,36 @@
-import 'package:chat_app/helper/helper_function.dart';
-import 'package:chat_app/pages/login_page.dart';
-import 'package:chat_app/pages/profile_page.dart';
-import 'package:chat_app/pages/search_page.dart';
+import 'package:chat_app/pages/home_page.dart';
 import 'package:chat_app/service/auth_service.dart';
-import 'package:chat_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+import '../widgets/widgets.dart';
+import 'login_page.dart';
+
+class ProfilePage extends StatefulWidget {
+  String userName;
+  String email;
+
+  ProfilePage({super.key, required this.userName, required this.email});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  String userName = "";
-  String email = "";
+class _ProfilePageState extends State<ProfilePage> {
   AuthService authService = AuthService();
-
-  @override
-  void initState() {
-    super.initState();
-    gettingUserData();
-  }
-
-  gettingUserData() async {
-    await HelperFunctions.getUserEmailFromSF().then(
-      (value) {
-        setState(() {
-          email = value!;
-        });
-      },
-    );
-    await HelperFunctions.getUserNameFromSF().then(
-      (value) {
-        setState(() {
-          userName = value!;
-        });
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: [
-          IconButton(
-            onPressed: () {
-              nextScreenReplace(context, const SearchPage());
-            },
-            icon: const Icon(Icons.search),
-          ),
-        ],
-        elevation: 0,
         centerTitle: true,
         backgroundColor: Theme.of(context).primaryColor,
+        elevation: 0,
         title: const Text(
-          "Groups",
+          "Profile",
           style: TextStyle(
-            fontSize: 27,
+            color: Colors.white,
+            fontSize: 25,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -78,7 +48,7 @@ class _HomePageState extends State<HomePage> {
             ),
             const Gap(15),
             Text(
-              userName,
+              widget.userName,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
@@ -89,9 +59,10 @@ class _HomePageState extends State<HomePage> {
               height: 2,
             ),
             ListTile(
-              onTap: () {},
+              onTap: () {
+                nextScreen(context, const HomePage());
+              },
               selectedColor: Theme.of(context).primaryColor,
-              selected: true,
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 20,
                 vertical: 5,
@@ -103,15 +74,9 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             ListTile(
-              onTap: () {
-                nextScreenReplace(
-                    context,
-                    ProfilePage(
-                      userName: userName,
-                      email: email,
-                    ));
-              },
+              onTap: () {},
               selectedColor: Theme.of(context).primaryColor,
+              selected: true,
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 20,
                 vertical: 5,
@@ -146,7 +111,8 @@ class _HomePageState extends State<HomePage> {
                             await authService.signOut();
                             Navigator.of(context).pushAndRemoveUntil(
                                 MaterialPageRoute(
-                                    builder: (context) => const LoginPage()),
+                                  builder: (context) => const LoginPage(),
+                                ),
                                 (route) => false);
                           },
                           icon: const Icon(
@@ -170,6 +136,36 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(color: Colors.black),
               ),
             ),
+          ],
+        ),
+      ),
+      body: Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 40,
+          vertical: 170,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Icon(
+              Icons.account_circle,
+              size: 200,
+              color: Colors.grey[700],
+            ),
+            const Gap(15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                const Text(
+                  "Full Name : ",
+                  style: TextStyle(fontSize: 17),
+                ),
+                Text(
+                  widget.userName,
+                  style: const TextStyle(fontSize: 17),
+                ),
+              ],
+            )
           ],
         ),
       ),
