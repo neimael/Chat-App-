@@ -28,4 +28,17 @@ class DatabaseService {
         await userCollection.where("email", isEqualTo: email).get();
     return querySnapshot;
   }
+
+  // getting user groups
+  getUserGroups() async {
+    return userCollection.doc(uid).snapshots();
+  }
+
+  // creating a group
+  Future createGroup(String userName, String id, String groupName) async {
+    DocumentReference documentReference = await groupCollection.add({
+      "groupName": groupName,
+      "groupIcon": "",
+    });
+  }
 }

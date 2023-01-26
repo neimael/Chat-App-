@@ -142,7 +142,7 @@ class _ProfilePageState extends State<ProfilePage> {
       body: Container(
         padding: const EdgeInsets.symmetric(
           horizontal: 40,
-          vertical: 170,
+          vertical: 80,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -152,9 +152,9 @@ class _ProfilePageState extends State<ProfilePage> {
               size: 200,
               color: Colors.grey[700],
             ),
-            const Gap(15),
+            const Gap(50),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
                   "Full Name : ",
@@ -165,7 +165,21 @@ class _ProfilePageState extends State<ProfilePage> {
                   style: const TextStyle(fontSize: 17),
                 ),
               ],
-            )
+            ),
+            const Gap(20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "Email : ",
+                  style: TextStyle(fontSize: 17),
+                ),
+                Text(
+                  widget.email,
+                  style: const TextStyle(fontSize: 17),
+                ),
+              ],
+            ),
           ],
         ),
       ),
