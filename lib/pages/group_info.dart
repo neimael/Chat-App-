@@ -44,6 +44,10 @@ class _GroupInfoState extends State<GroupInfo> {
     return r.substring(r.indexOf("_") + 1);
   }
 
+  String getId(String res) {
+    return res.substring(0, res.indexOf("_"));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -140,7 +144,10 @@ class _GroupInfoState extends State<GroupInfo> {
                           ),
                         ),
                       ),
-                      title: Text(getName(snapshot.data['members'][index])),
+                      title: Text(
+                        getName(snapshot.data['members'][index]),
+                      ),
+                      subtitle: Text(getId(snapshot.data['members'][index])),
                     ),
                   );
                 },
