@@ -10,8 +10,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-import '../shared/constants.dart';
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -59,7 +57,7 @@ class _HomePageState extends State<HomePage> {
     );
 
     // getting the list of snapshots in our stream
-    await DatabaseService(FirebaseAuth.instance.currentUser!.uid)
+    await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
         .getUserGroups()
         .then((snapshot) {
       setState(() {
@@ -289,7 +287,8 @@ class _HomePageState extends State<HomePage> {
                         setState(() {
                           _isLoading = true;
                         });
-                        DatabaseService(FirebaseAuth.instance.currentUser!.uid)
+                        DatabaseService(
+                                uid: FirebaseAuth.instance.currentUser!.uid)
                             .createGroup(
                                 userName,
                                 FirebaseAuth.instance.currentUser!.uid,

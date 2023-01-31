@@ -1,7 +1,6 @@
 import 'package:chat_app/pages/home_page.dart';
 import 'package:chat_app/pages/register_page.dart';
 import 'package:chat_app/service/database_service.dart';
-import 'package:chat_app/shared/constants.dart';
 import 'package:chat_app/widgets/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -172,7 +171,7 @@ class _LoginPageState extends State<LoginPage> {
           .then((value) async {
         if (value == true) {
           QuerySnapshot querySnapshot =
-              await DatabaseService(FirebaseAuth.instance.currentUser!.uid)
+              await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
                   .gettingUserData(email);
 
           // saving the values to our shared preferences
